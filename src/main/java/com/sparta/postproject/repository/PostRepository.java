@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 
 import java.util.List;
+import java.util.Optional;
 
 @EnableJpaAuditing
 @SpringBootApplication
@@ -14,4 +15,5 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findAll();
 
     Post save(Post post);
+    Optional<Post> findById(Long id);
 }

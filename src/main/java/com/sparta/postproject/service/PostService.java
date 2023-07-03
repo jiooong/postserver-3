@@ -6,6 +6,7 @@ import com.sparta.postproject.entity.Post;
 import com.sparta.postproject.repository.PostRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public class PostService {
 
@@ -25,5 +26,9 @@ public class PostService {
         Post addpost = postRepository.save(post);
         return new PostResponseDto(addpost);
 
+    }
+
+    public Optional<Post> getPostById(Long id) {
+        return postRepository.findById(id);
     }
 }

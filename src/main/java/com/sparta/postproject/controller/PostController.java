@@ -2,10 +2,12 @@ package com.sparta.postproject.controller;
 
 import com.sparta.postproject.dto.PostRequestDto;
 import com.sparta.postproject.dto.PostResponseDto;
+import com.sparta.postproject.entity.Post;
 import com.sparta.postproject.service.PostService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -28,12 +30,12 @@ public class PostController {
         return postService.createPost(postRequestDto);
 
     }
-/*
+
     @GetMapping("/post/{id}")
-    public PostResponseDto getPost(@PathVariable("id") Long id ){
-
+    public Optional<Post> getPost(@PathVariable("id") Long id ){
+        return postService.getPostById(id);
     }
-
+/*
     @PutMapping("/post/{id}")
     public PostResponseDto updatePost(@PathVariable("id") Long id ){
 
