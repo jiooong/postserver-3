@@ -54,11 +54,10 @@ public class PostController {
         return postService.updatePost(id, postrequestDto);
 
     }
-/*
-    @DeleteMapping("/post/{id}")
-    public PostResponseDto deletePost(@PathVariable("id") Long id ){
 
+    @DeleteMapping("/post/{id}")
+    public String deletePost(@PathVariable("id") Long id, @RequestBody PostRequestDto postRequestDto){
+        return postService.deletePost(id, postRequestDto);
     }
-    */
 
 }

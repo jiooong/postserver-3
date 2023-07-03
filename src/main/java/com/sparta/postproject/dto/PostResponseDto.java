@@ -3,6 +3,8 @@ package com.sparta.postproject.dto;
 import com.sparta.postproject.entity.Post;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 //private 으로 선언해주고 getter을 사용해서 값에 접근하는 이유 : 캡슐화, 자료보호
 //Dto를 사용하는 이유 ? -> 다양한 이유가 있다 보안 , 정보의 가공이 가능
 
@@ -13,7 +15,7 @@ public class PostResponseDto {
     private String title;
     private String content;
     private int password;
-    private String localDateTime;
+    private LocalDateTime localDateTime;
 
 
     public PostResponseDto(Post post){
@@ -21,7 +23,7 @@ public class PostResponseDto {
         this.title = post.getTitle();
         this.content = post.getContent();
         this.password = post.getPassword();
-        this.localDateTime = post.getLocaldatetime();
+        this.localDateTime = post.getCreatedAt();
     }
 }
 

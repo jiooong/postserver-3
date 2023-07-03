@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "post")
 @NoArgsConstructor
-public class Post {
+public class Post extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,8 +28,7 @@ public class Post {
     @Column(name = "password")
     int password;
 
-    @Column(name = "localDateTime")
-    LocalDateTime localDateTime;
+
 
     public Post(PostRequestDto postRequestDto) {
         this.title = postRequestDto.getTitle();
@@ -37,9 +36,6 @@ public class Post {
         this.password = postRequestDto.getPassword();
     }
 
-    public String getLocaldatetime() {
-        return String.valueOf(localDateTime);
-    }
 
     public void update(PostRequestDto postrequestDto) {
         this.content = postrequestDto.getContent();
