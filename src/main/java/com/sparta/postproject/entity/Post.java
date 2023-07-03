@@ -33,11 +33,16 @@ public class Post {
 
     public Post(PostRequestDto postRequestDto) {
         this.title = postRequestDto.getTitle();
-        this.content = postRequestDto.getContents();
+        this.content = postRequestDto.getContent();
         this.password = postRequestDto.getPassword();
     }
 
     public String getLocaldatetime() {
         return String.valueOf(localDateTime);
+    }
+
+    public void update(PostRequestDto postrequestDto) {
+        this.content = postrequestDto.getContent();
+        this.title = postrequestDto.getTitle();
     }
 }
