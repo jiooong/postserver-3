@@ -15,7 +15,7 @@ public class PostResponseDto {
     private String title;
     private String content;
     private int password;
-    private LocalDateTime localDateTime;
+    private LocalDateTime createAt;
 
 
     public PostResponseDto(Post post){
@@ -23,7 +23,7 @@ public class PostResponseDto {
         this.title = post.getTitle();
         this.content = post.getContent();
         this.password = post.getPassword();
-        this.localDateTime = post.getCreatedAt();
+        this.createAt = post.getCreatedAt();
     }
 }
 

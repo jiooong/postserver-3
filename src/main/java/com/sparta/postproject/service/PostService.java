@@ -23,7 +23,8 @@ public class PostService {
 
     public List<PostResponseDto> findAll() {
 
-        return postRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt")).stream().map(PostResponseDto::new).toList();
+        //return postRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt")).stream().map(PostResponseDto::new).toList();
+        return postRepository.findAllByOrderByCreatedAtDesc().stream().map(PostResponseDto::new).toList();
 
     }
 

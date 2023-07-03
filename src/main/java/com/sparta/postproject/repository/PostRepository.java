@@ -15,8 +15,9 @@ import java.util.Optional;
 @EnableJpaAuditing
 @SpringBootApplication
 public interface PostRepository extends JpaRepository<Post, Long> {
-    List<Post> findAll();
+    List<Post> findAllByOrderByCreatedAtDesc();
 
     Post save(Post post);
     Optional<Post> findById(Long id);
 }
+
