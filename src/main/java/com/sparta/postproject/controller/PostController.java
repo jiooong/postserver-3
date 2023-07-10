@@ -4,6 +4,8 @@ import com.sparta.postproject.dto.PostRequestDto;
 import com.sparta.postproject.dto.PostResponseDto;
 import com.sparta.postproject.entity.Post;
 import com.sparta.postproject.service.PostService;
+import com.sparta.postproject.util.JwtUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,8 +18,10 @@ import java.util.Optional;
 public class PostController {
     // 1번째 방법 : 생성자 주입
     private final PostService postService;
+    private final JwtUtil jwtUtil;
 
-    public PostController(PostService postService) {
+    public PostController(PostService postService, JwtUtil jwtUtil) {
+        this.jwtUtil = jwtUtil;
         this.postService = postService;
     }
 
@@ -38,10 +42,20 @@ public class PostController {
     }
 
     @PostMapping("/posts")
-    public PostResponseDto createPost(@RequestBody PostRequestDto postRequestDto)
+    public PostResponseDto createPost(@RequestBody PostRequestDto postRequestDto, HttpServletRequest req)
     {
-        return postService.createPost(postRequestDto);
+        String token = authentication(req);
+        return postService.createPost(postRequestDto, token);
+    }
 
+    private String authentication(HttpServletRequest req) {
+        String tokenValue = jwtUtil.getTokenFromRequest(req);
+        String token = jwtUtil.substringToken(tokenValue);
+
+        if(!jwtUtil.validateToken(token)){
+            throw new IllegalArgumentException("Token Error");
+        }
+        return token;
     }
 
     @GetMapping("/post/{id}")
@@ -50,14 +64,16 @@ public class PostController {
     }
 
     @PutMapping("/post/{id}")
-    public PostResponseDto updatePost(@PathVariable("id") Long id, @RequestBody PostRequestDto postrequestDto){
-        return postService.updatePost(id, postrequestDto);
+    public PostResponseDto updatePost(@PathVariable("id") Long id, @RequestBody PostRequestDto postrequestDto, HttpServletRequest req){
+        String token = authentication(req);
+        return postService.updatePost(id, postrequestDto, token);
 
     }
 
     @DeleteMapping("/post/{id}")
-    public String deletePost(@PathVariable("id") Long id, @RequestBody PostRequestDto postRequestDto){
-        return postService.deletePost(id, postRequestDto);
+    public String deletePost(@PathVariable("id") Long id, @RequestBody PostRequestDto postRequestDto, HttpServletRequest req){
+        String token = authentication(req);
+        return postService.deletePost(id, postRequestDto, token);
     }
 
 }

@@ -4,7 +4,8 @@ import com.sparta.postproject.dto.PostRequestDto;
 import com.sparta.postproject.dto.PostResponseDto;
 import com.sparta.postproject.entity.Post;
 import com.sparta.postproject.repository.PostRepository;
-import org.springframework.data.domain.Sort;
+import com.sparta.postproject.util.JwtUtil;
+import io.jsonwebtoken.Claims;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -16,9 +17,12 @@ import java.util.Optional;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final JwtUtil jwtUtil;
 
-    public PostService(PostRepository postRepository) {
+    public PostService(PostRepository postRepository, JwtUtil jwtUtil) {
+
         this.postRepository = postRepository;
+        this.jwtUtil = jwtUtil;
     }
 
     public List<PostResponseDto> findAll() {
@@ -28,24 +32,33 @@ public class PostService {
 
     }
 
-    public PostResponseDto createPost(PostRequestDto postRequestDto) {
-        Post post = new Post(postRequestDto);
+    public PostResponseDto createPost(PostRequestDto postRequestDto, String token) {
+        String username = getUsername(token);
+        Post post = new Post(postRequestDto, username);
         Post addpost = postRepository.save(post);
         return new PostResponseDto(addpost);
+    }
 
+    //payload에 들어갈 정보들이 claim이라고 불린다
+    private String getUsername(String token) {
+        Claims info = jwtUtil.getUserInfoFromToken(token);
+        String username = info.getSubject();
+        return username;
     }
 
     public Optional<Post> getPostById(Long id) {
         return postRepository.findById(id);
     }
 
-    public PostResponseDto updatePost(Long id, PostRequestDto postrequestDto) {
+    public PostResponseDto updatePost(Long id, PostRequestDto postrequestDto, String token) {
         Post post = findPost(id);
-        if(checkPassword(post.getPassword(), postrequestDto.getPassword())){
-            post.update(postrequestDto);
-        }else{
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "비밀번호가 틀렸습니다.");
+
+        String username = getUsername(token);
+
+        if(!post.getUsername().equals(username)){
+            throw new IllegalArgumentException("작성자가 아닙니다");
         }
+        post.update(postrequestDto);
 
         return new PostResponseDto(post);
     }
@@ -62,13 +75,14 @@ public class PostService {
     }
 
     // delete와 deleteById의 차이점
-    public String deletePost(Long id, PostRequestDto postRequestDto) {
-        Post post = findPost(id);;
-        if(post.getPassword()==postRequestDto.getPassword()){
-            postRepository.delete(post);
-        }else{
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "비밀번호가 틀렸습니다.");
+    public String deletePost(Long id, PostRequestDto postRequestDto, String token) {
+        Post post = findPost(id);
+        String username = getUsername(token);
+        if(!post.getUsername().equals(username)){
+            throw new IllegalArgumentException("작성자가 아닙니다");
         }
+        postRepository.delete(post);
+
         return "Success";
     }
 }

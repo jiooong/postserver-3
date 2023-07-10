@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,22 +21,24 @@ public class Post extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+
     @Column(name = "title", nullable = false)
     String title;
 
     @Column(name = "content", nullable = false)
     String content;
 
-    @Column(name = "password")
-    int password;
+   @Column(name = "username", nullable = false)
+    String username;
 
 
 
-    public Post(PostRequestDto postRequestDto) {
+    public Post(PostRequestDto postRequestDto, String username) {
         this.title = postRequestDto.getTitle();
         this.content = postRequestDto.getContent();
-        this.password = postRequestDto.getPassword();
+        this.username = postRequestDto.getUsername();
     }
+
 
 
     public void update(PostRequestDto postrequestDto) {
