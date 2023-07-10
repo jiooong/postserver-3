@@ -5,23 +5,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "users")
 @Getter
-@Table(name = "user")
 @NoArgsConstructor
-public class User extends BaseTimeEntity{
-
+public class User {
     @Id
-    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "username", nullable = false , unique = true)
+    @Column(nullable = false, unique = true)
     private String username;
 
-    @Column(name = "password", nullable = false)
+    @Column(nullable = false)
     private String password;
 
-    public User(String username, String password){
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
     }
