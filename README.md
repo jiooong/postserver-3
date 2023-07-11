@@ -1,5 +1,5 @@
-# postserver-2
-회원가입, 로그인 기능이 추가된 백엔드 서버
+# postserver-3
+"회원가입, 로그인, 댓글 작성/조회/수정/삭제 기능이 추가된 나만의 항해 블로그 백엔드 서버 만들기"
 
 ## ERD 
 <img width="80%" src="https://github.com/jiooong/postserver-2/assets/102176567/784af9de-d7cf-4eb3-8d9c-b9eaf23debe1"/>
