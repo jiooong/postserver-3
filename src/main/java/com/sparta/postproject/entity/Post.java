@@ -31,6 +31,13 @@ public class Post extends BaseTimeEntity {
    @Column(name = "username", nullable = false)
     String username;
 
+   @ManyToOne
+   private User user;
+
+   @OneToMany(mappedBy = "post")
+    private List<Comment> commentList = new ArrayList<>();
+
+
 
 
     public Post(PostRequestDto postRequestDto, String username) {
