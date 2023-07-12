@@ -1,13 +1,15 @@
 package com.sparta.postproject.entity;
 
+import com.sparta.postproject.dto.CommentRequestDto;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "comment")
+@NoArgsConstructor
+@Getter
 public class Comment extends BaseTimeEntity{
 
     @Id
@@ -23,4 +25,18 @@ public class Comment extends BaseTimeEntity{
     @ManyToOne
     private User user;
 
+    public Comment(CommentRequestDto commentRequestDto) {
+       this.content = commentRequestDto.getContent();
+    }
+
+
+
+    public void connectPost(Post post) {
+        this.post = post;
+    }
+
+
+    public void connectUser(User user) {
+        this.user = user;
+    }
 }
