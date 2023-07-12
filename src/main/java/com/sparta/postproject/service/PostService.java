@@ -64,7 +64,7 @@ public class PostService {
         String username = getUsername(token);
 
         if(!post.getUsername().equals(username)){
-            throw new IllegalArgumentException("작성자가 아닙니다");
+            throw new IllegalArgumentException("작성자만 수정할 수 있습니다");
         }
         post.update(postrequestDto);
 
@@ -87,7 +87,7 @@ public class PostService {
         Post post = findPost(id);
         String username = getUsername(token);
         if(!post.getUsername().equals(username)){
-            throw new IllegalArgumentException("작성자가 아닙니다");
+            throw new IllegalArgumentException("작성자만 삭제할 수 있습니다.");
         }
         postRepository.delete(post);
 

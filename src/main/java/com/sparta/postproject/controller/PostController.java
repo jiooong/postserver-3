@@ -53,7 +53,7 @@ public class PostController {
         String token = jwtUtil.substringToken(tokenValue);
 
         if(!jwtUtil.validateToken(token)){
-            throw new IllegalArgumentException("Token Error");
+            throw new IllegalArgumentException("토큰이 유효하지 않습니다.");
         }
         return token;
     }
