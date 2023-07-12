@@ -3,6 +3,7 @@ package com.sparta.postproject.service;
 import com.sparta.postproject.dto.CommentRequestDto;
 import com.sparta.postproject.dto.CommentResponseDto;
 import com.sparta.postproject.dto.PostResponseDto;
+import com.sparta.postproject.dto.StatusCodeResponseDto;
 import com.sparta.postproject.entity.Comment;
 import com.sparta.postproject.entity.Post;
 import com.sparta.postproject.entity.User;
@@ -12,6 +13,7 @@ import com.sparta.postproject.repository.UserRepository;
 import com.sparta.postproject.util.JwtUtil;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -56,4 +58,19 @@ public class CommentService {
 
     }
 
+    public StatusCodeResponseDto deleteComment(Long id, CommentRequestDto commentRequestDto, String token) {
+      // 해당 사용자가 작성한 댓글인지 확인하기
+        Comment comment = commentRepository.findById(id).orElseThrow(()->
+                new IllegalArgumentException("해당 댓글은 존재하지 않습니다"));
+
+        String username = getUsername(token);
+
+        if(!comment.getUser().getUsername().equals(username)){
+            throw new IllegalArgumentException("작성자가 아닙니다");
+        }
+
+        commentRepository.delete(comment);
+
+        return new StatusCodeResponseDto(HttpStatus.OK.value(), "댓글 삭제 성공");
+    }
 }

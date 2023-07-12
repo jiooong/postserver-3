@@ -3,7 +3,9 @@ package com.sparta.postproject.service;
 import com.sparta.postproject.dto.PostRequestDto;
 import com.sparta.postproject.dto.PostResponseDto;
 import com.sparta.postproject.entity.Post;
+import com.sparta.postproject.entity.User;
 import com.sparta.postproject.repository.PostRepository;
+import com.sparta.postproject.repository.UserRepository;
 import com.sparta.postproject.util.JwtUtil;
 import io.jsonwebtoken.Claims;
 import org.springframework.http.HttpStatus;
@@ -16,11 +18,12 @@ import java.util.Optional;
 @Service
 public class PostService {
 
+    private final UserRepository userRepository;
     private final PostRepository postRepository;
     private final JwtUtil jwtUtil;
 
-    public PostService(PostRepository postRepository, JwtUtil jwtUtil) {
-
+    public PostService(PostRepository postRepository, JwtUtil jwtUtil, UserRepository userRepository) {
+        this.userRepository = userRepository;
         this.postRepository = postRepository;
         this.jwtUtil = jwtUtil;
     }
@@ -35,6 +38,9 @@ public class PostService {
     public PostResponseDto createPost(PostRequestDto postRequestDto, String token) {
         String username = getUsername(token);
         Post post = new Post(postRequestDto, username);
+        User user = userRepository.findByUsername(username).orElseThrow(()->
+                new IllegalArgumentException("해당 유저는 존재하지 않습니다"));
+        post.connectUser(user);
         Post addpost = postRepository.save(post);
         return new PostResponseDto(addpost);
     }
