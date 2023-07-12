@@ -30,7 +30,6 @@ public class Comment extends BaseTimeEntity{
     }
 
 
-
     public void connectPost(Post post) {
         this.post = post;
     }
