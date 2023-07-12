@@ -46,7 +46,7 @@ public class UserService {
         UserRoleEnum role = UserRoleEnum.USER;
         if (requestDto.isAdmin()) {
             if (!ADMIN_TOKEN.equals(requestDto.getAdminToken())) {
-                throw new IllegalArgumentException("관리자 암호가 틀려 등록이 불가능합니다.");
+                throw new IllegalArgumentException("토큰이 유효하지 않습니다");
             }
             role = UserRoleEnum.ADMIN;
         }
@@ -71,7 +71,6 @@ public class UserService {
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new IllegalArgumentException("회원을 찾을 수 없습니다. 비밀번호 불일치");
         }
-
 
         // Jwt 토큰 생성, response에 넣기
         String token = jwtUtil.createToken(user.getUsername(), user.getRole());

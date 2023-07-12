@@ -67,7 +67,7 @@ public class CommentService {
         String username = getUsername(token);
 
         if(!comment.getUser().getUsername().equals(username)){
-            throw new IllegalArgumentException("작성자가 아닙니다");
+            throw new IllegalArgumentException("작성자만 수정할 수 있습니다.");
         }
         comment.update(commentRequestDto);
 
@@ -75,7 +75,7 @@ public class CommentService {
     }
     private Comment findComment(Long id) {
         return commentRepository.findById(id).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.BAD_REQUEST, "댓글이 존재하지 않습니다.")
+                new IllegalArgumentException("댓글이 존재하지 않습니다.")
         );
     }
 
@@ -87,7 +87,7 @@ public class CommentService {
         String username = getUsername(token);
 
         if(!comment.getUser().getUsername().equals(username)){
-            throw new IllegalArgumentException("작성자가 아닙니다");
+            throw new IllegalArgumentException("작성자만 삭제할 수 있습니다.");
         }
 
         commentRepository.delete(comment);
