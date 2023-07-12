@@ -34,7 +34,6 @@ public class Comment extends BaseTimeEntity{
         this.content = commentRequestDto.getContent();
     }
 
-
     public void connectPost(Post post) {
         this.post = post;
     }

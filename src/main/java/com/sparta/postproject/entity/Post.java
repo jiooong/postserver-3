@@ -52,4 +52,8 @@ public class Post extends BaseTimeEntity {
         this.content = postrequestDto.getContent();
         this.title = postrequestDto.getTitle();
     }
+
+    public void connectUser(User user) {
+        this.user=user;
+    }
 }
