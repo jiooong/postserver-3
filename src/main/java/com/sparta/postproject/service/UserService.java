@@ -39,7 +39,7 @@ public class UserService {
         // 회원 중복 확인
         Optional<User> checkUsername = userRepository.findByUsername(username);
         if (checkUsername.isPresent()) {
-            throw new IllegalArgumentException("중복된 사용자가 존재합니다.");
+            throw new IllegalArgumentException("중복된 username 입니다.");
         }
 
         // 사용자 ROLE 확인
@@ -66,10 +66,10 @@ public class UserService {
 
         // 사용자 확인
         User user = userRepository.findByUsername(username).orElseThrow(() ->
-                new IllegalArgumentException("등록된 사용자가 없습니다."));
+                new IllegalArgumentException("회원을 찾을 수 없습니다. 등록된 사용자가 없습니다."));
         // 비밀번호 확인
         if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new IllegalArgumentException("비밀번호 불일치");
+            throw new IllegalArgumentException("회원을 찾을 수 없습니다. 비밀번호 불일치");
         }
 
 
