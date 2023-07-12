@@ -8,6 +8,7 @@ import com.sparta.postproject.repository.PostRepository;
 import com.sparta.postproject.repository.UserRepository;
 import com.sparta.postproject.util.JwtUtil;
 import io.jsonwebtoken.Claims;
+import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -56,6 +57,7 @@ public class PostService {
         return postRepository.findById(id);
     }
 
+    @Transactional
     public PostResponseDto updatePost(Long id, PostRequestDto postrequestDto, String token) {
         Post post = findPost(id);
 

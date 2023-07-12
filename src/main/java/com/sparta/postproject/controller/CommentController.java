@@ -43,4 +43,13 @@ public class CommentController {
         }
         return token;
     }
+
+    @PutMapping("/comments/{id}")
+    public CommentResponseDto updateComment(@PathVariable("id") Long id,
+                                            @RequestBody CommentRequestDto commentRequestDto,
+                                            HttpServletRequest req){
+        String token = authentication(req);
+        return commentService.updateComment(id, commentRequestDto, token);
+    }
 }
+
