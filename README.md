@@ -2,9 +2,10 @@
 "회원가입, 로그인, 댓글 작성/조회/수정/삭제 기능이 추가된 나만의 항해 블로그 백엔드 서버 만들기"
 
 ## ERD 
-<img width="80%" src="https://github.com/jiooong/postserver-2/assets/102176567/784af9de-d7cf-4eb3-8d9c-b9eaf23debe1"/>
+<img width="80%" src="https://github.com/jiooong/postserver-3/assets/102176567/8bc8924a-6534-4ffd-9dbb-eab01613a030"/>
 
 ## API 명세
 
-<img width="100%" src="https://github.com/jiooong/postserver-2/assets/102176567/356cde2f-259b-4212-ba4b-ad835520d818"/>
-<img width="100%" src="https://github.com/jiooong/postserver-2/assets/102176567/3c812ee8-c842-4afe-adcc-c60a301e98fd"/>
+<img width="100%" src="https://github.com/jiooong/postserver-3/assets/102176567/ca6969fa-b9c6-4971-839d-46f005841f0c"/>
+<img width="100%" src="https://github.com/jiooong/postserver-3/assets/102176567/df4aaa94-f053-44ba-b8bb-5f1de48b59e6"/>
+<img width="100%" src="https://github.com/jiooong/postserver-3/assets/102176567/7c4a8135-cae0-47a7-9227-335f645d7f37"/>
