@@ -2,6 +2,7 @@ package com.sparta.postproject.service;
 
 import com.sparta.postproject.dto.CommentRequestDto;
 import com.sparta.postproject.dto.CommentResponseDto;
+import com.sparta.postproject.dto.PostRequestDto;
 import com.sparta.postproject.dto.PostResponseDto;
 import com.sparta.postproject.entity.Comment;
 import com.sparta.postproject.entity.Post;
@@ -12,7 +13,10 @@ import com.sparta.postproject.repository.UserRepository;
 import com.sparta.postproject.util.JwtUtil;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class CommentService {
@@ -54,6 +58,24 @@ public class CommentService {
         Comment addComment = commentRepository.save(comment);
         return new CommentResponseDto(addComment);
 
+    }
+    @Transactional
+    public CommentResponseDto updateComment(Long id, CommentRequestDto commentRequestDto, String token) {
+        Comment comment = findComment(id);
+
+        String username = getUsername(token);
+
+        if(!comment.getUser().getUsername().equals(username)){
+            throw new IllegalArgumentException("작성자가 아닙니다");
+        }
+        comment.update(commentRequestDto);
+
+        return new CommentResponseDto(comment);
+    }
+    private Comment findComment(Long id) {
+        return commentRepository.findById(id).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.BAD_REQUEST, "댓글이 존재하지 않습니다.")
+        );
     }
 
 }

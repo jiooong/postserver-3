@@ -1,6 +1,7 @@
 package com.sparta.postproject.entity;
 
 import com.sparta.postproject.dto.CommentRequestDto;
+import com.sparta.postproject.dto.PostRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,13 +30,14 @@ public class Comment extends BaseTimeEntity{
        this.content = commentRequestDto.getContent();
     }
 
+    public void update(CommentRequestDto commentRequestDto) {
+        this.content = commentRequestDto.getContent();
+    }
 
 
     public void connectPost(Post post) {
         this.post = post;
     }
-
-
     public void connectUser(User user) {
         this.user = user;
     }
